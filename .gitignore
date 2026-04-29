@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Generated analysis outputs
+results/*
+!results/.gitkeep
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
