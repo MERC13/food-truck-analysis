@@ -9,7 +9,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
-from pathlib import Path
+
+from project_paths import data_file, ensure_results_dir
 
 
 plt.style.use("seaborn-v0_8-whitegrid")
@@ -29,18 +30,14 @@ plt.rcParams.update(
 REC_COLORS = {1: "#2F6DAE", 2: "#4E9E6A", 3: "#D98E3A"}
 SOCIAL_COLORS = {"agree": "#586B7D", "against": "#B24C4C"}
 CI_COLOR = "#2C3E50"
-ROOT = Path(__file__).resolve().parent
-DATA_DIR = ROOT / "data"
-RESULTS_DIR = ROOT / "results"
-ROUND_PATH = DATA_DIR / "foodtruck_clean_rounds.csv"
-SUMMARY_PATH = DATA_DIR / "foodtruck_participant_summary.csv"
-ATTEMPTS_PATH = DATA_DIR / "foodtruck_clean_attempts.csv"
+RESULTS_DIR = ensure_results_dir()
+ROUND_PATH = data_file("foodtruck_clean_rounds.csv")
+SUMMARY_PATH = data_file("foodtruck_participant_summary.csv")
+ATTEMPTS_PATH = data_file("foodtruck_clean_attempts.csv")
 HEATMAP_PATH = RESULTS_DIR / "day_hour_choice_probability_heatmaps.png"
 RECOMMENDATION_CI_PATH = RESULTS_DIR / "days_3_5_recommendation_ci.png"
 SOCIAL_CI_PATH = RESULTS_DIR / "days_6_8_social_recommendation_ci.png"
 MICROCLUSTER_CI_PATH = RESULTS_DIR / "microcluster_profiles_3_ci.png"
-
-RESULTS_DIR.mkdir(exist_ok=True)
 
 
 def mean_bootstrap_ci(values, n_boot=2000, alpha=0.05, seed=42):

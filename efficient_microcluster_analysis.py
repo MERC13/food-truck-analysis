@@ -12,16 +12,14 @@ distinct strategies and decision-making patterns.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
+from project_paths import data_file
 
-ROOT = Path(__file__).resolve().parent
-DATA_DIR = ROOT / "data"
-SUMMARY_PATH = DATA_DIR / "foodtruck_participant_summary.csv"
-ATTEMPTS_PATH = DATA_DIR / "foodtruck_clean_attempts.csv"
+SUMMARY_PATH = data_file("foodtruck_participant_summary.csv")
+ATTEMPTS_PATH = data_file("foodtruck_clean_attempts.csv")
 
 
 @dataclass(frozen=True)
