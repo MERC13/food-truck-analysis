@@ -885,13 +885,23 @@ micro_rank = (
     .sort_values("final_earnings", ascending=False)
     .reset_index(drop=True)
 )
+micro_names = [
+    "High-Earner Deliberators",
+    "Independent Progressives",
+    "Advice-Purists",
+]
 micro_rank_map = {
-    int(row["microcluster_id"]): f"Microcluster {rank + 1}"
+    int(row["microcluster_id"]): micro_names[rank]
     for rank, (_, row) in enumerate(micro_rank.iterrows())
 }
 micro_frame["microcluster_label"] = micro_frame["microcluster_id"].map(micro_rank_map)
 micro_order = [micro_rank_map[int(cluster_id)] for cluster_id in micro_rank["microcluster_id"]]
 micro_palette = {label: REC_COLORS[index + 1] for index, label in enumerate(micro_order)}
+micro_display_labels = {
+    "High-Earner Deliberators": "High-Earner\nDeliberators",
+    "Independent Progressives": "Independent\nProgressives",
+    "Advice-Purists": "Advice-\nPurists",
+}
 
 print(f"Efficient participants: {len(efficient_group)}")
 print(f"k=3 silhouette: {best_micro3.silhouette:.3f}")
@@ -909,7 +919,7 @@ micro_metrics = [
     ("avg_answer_duration_ms", "Avg answer duration (ms)"),
 ]
 
-fig, axes = plt.subplots(2, 4, figsize=(18, 9.5), sharex=True)
+fig, axes = plt.subplots(2, 4, figsize=(20, 10.5), sharex=True)
 for ax, (metric_col, metric_title) in zip(axes.flatten(), micro_metrics):
     metric_summary = summarize_numeric(micro_frame, ["microcluster_label"], metric_col)
     plot_grouped_bars(
@@ -922,14 +932,15 @@ for ax, (metric_col, metric_title) in zip(axes.flatten(), micro_metrics):
         title=metric_title,
         bar_colors=[micro_palette[label] for label in micro_order],
     )
-    ax.tick_params(axis="x", rotation=0)
+    ax.set_xticklabels([micro_display_labels[label] for label in micro_order], rotation=0)
+    ax.tick_params(axis="x", labelsize=9)
 
 fig.suptitle(
-    "Efficient group microclusters (k=3) with confidence intervals",
+    "Efficient group microclusters: High-Earner Deliberators, Independent Progressives, Advice-Purists",
     fontsize=16,
-    y=0.99,
+    y=0.995,
 )
-fig.tight_layout(rect=[0, 0, 1, 0.95])
+fig.tight_layout(rect=[0, 0.02, 1, 0.965], w_pad=2.0, h_pad=2.0)
 save_figure(fig, MICROCLUSTER_CI_PATH)
 print(f"Saved {MICROCLUSTER_CI_PATH.name}")
 print("\n" + "=" * 70)

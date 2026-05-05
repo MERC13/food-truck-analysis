@@ -43,6 +43,16 @@ python main.py
 	- Prints recommendation-system design principles based on observed behavior.
 - `check_conditions.py`
 	- Quick integrity check of day-level experiment condition columns.
+- `optimize_recommendation_policy.py`
+	- Fast policy analysis for fixed advice frequency, day-by-day schedules, and a state-plus-history advice rule.
+	- Prints the preferred policy in minutes rather than hours.
+
+## Figures and Outputs
+
+- `results/microcluster_profiles_3_ci.png` uses the named efficient-player clusters:
+  - High-Earner Deliberators
+  - Independent Progressives
+  - Advice-Purists
 
 ## Reproducibility Notes
 
